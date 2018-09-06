@@ -4,3 +4,4 @@ export default interface User {
     age: number,
     birthday: Date
 }
+
