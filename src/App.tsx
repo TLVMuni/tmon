@@ -5,7 +5,7 @@ import UserInterface from './UserInterface';
 
 import Dashboard from './Dashboard';
 
-class App extends React.Component<UserInterface, {}> {
+class App extends React.Component<UserInterface, any> {
 
     render() {
 
@@ -14,6 +14,5 @@ class App extends React.Component<UserInterface, {}> {
         </Switch>
     }
 }
-//shuki 
 
 export default App;
