@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-interface FooterProps {
-    cameras: any
-}
-
 class Footer extends React.Component<FooterProps> {
 
     render() {
