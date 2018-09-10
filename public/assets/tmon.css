@@ -94,3 +94,37 @@ a[data-toggle="collapse"] {
     right: 20px;
     transform: translateY(-50%);
 }
+
+#footer {
+    background-color: rgba(228, 225, 220, 0.85);
+    width: auto;
+    position: absolute;
+    bottom: 10px;
+    left: 260px;
+    right: 10px;;
+}
+
+#footerDesktop {
+    height: 140px;
+    padding-top: 0;
+}
+
+#footerDesktop .carousel {
+    position: absolute;
+    left: 37px;
+    right: 36px;
+    bottom: 1px;
+    height: 145px;
+}
+
+.carouselWrapper {
+    position: absolute;
+    z-index: 1;
+    top: 12px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 135px;
+    overflow: hidden;
+}
