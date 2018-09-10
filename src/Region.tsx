@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import RegionProps from './RegionRouterProps';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-
+import Footer from './Footer';
 import * as regionsData from './regions.json';
 
 interface RegionState {
@@ -71,9 +71,7 @@ class Region extends React.Component<RegionProps, RegionState> {
 
         return (
 
-
-            <div>
-                <div>{this.props.match.params.regionId}</div>
+            <React.Fragment>
                 <Map google={this.props.google}
                     style={{width: '100%', height: '100%', position: 'relative'}}
                     onClick={this.onMapClicked}
@@ -90,7 +88,8 @@ class Region extends React.Component<RegionProps, RegionState> {
                         </div>
                      </InfoWindow>
                 </Map>
-            </div>
+                <Footer cameras={regionData.cameras} />
+            </React.Fragment>
         )
     }
 
