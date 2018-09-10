@@ -128,3 +128,51 @@ a[data-toggle="collapse"] {
     height: 135px;
     overflow: hidden;
 }
+
+.carouselScroller {
+    height: 100%;
+    float: left;
+    padding: 0;
+    cursor: pointer;
+}
+
+.carouselScroller ul {
+    list-style: none;
+    display: block;
+    float: left;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    counter-reset: item;
+}
+
+.carouselScroller li:first-child {
+    padding-left: 0;
+}
+
+.carouselScroller li {
+    width: 140px;
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    padding: 0 8px;
+    width: 145px;
+    height: 100%;
+    font-size: 10px;
+}
+
+.carouselScroller .carousel-item-div.selected {
+    background-color: #FFF;
+}
+
+.carouselScroller .carousel-item-div {
+    display: table-cell;
+    width: 140px;
+    height: 120px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px 4px 2px;
+}
