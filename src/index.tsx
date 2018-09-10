@@ -5,7 +5,6 @@ import { HashRouter as Router } from 'react-router-dom';
 import App from './App';
 
 ReactDOM.render(<Router>
-                    <App name='Typescript' age={105} 
-                        address='sss' birthday={new Date()}/>
+                    <App />
                 </Router>,
                  document.getElementById('root'));
