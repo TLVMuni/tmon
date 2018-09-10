@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Dashboard from './Dashboard';
 
-const App = (props) => {
+const App = (props:any) => {
     return <Switch>
         <Route path='/' component={Dashboard} />
     </Switch>
