@@ -6,7 +6,7 @@ import classNames from 'classnames';
 class Footer extends React.Component<FooterProps, FooterState> {
 
     state = {
-        activeCameraId: this.props.cameras[0].id
+        activeCameraId: this.props.activeCameraId
     }
 
     cameraClicked = (cameraId: number) => {
@@ -18,9 +18,9 @@ class Footer extends React.Component<FooterProps, FooterState> {
     }
 
     componentDidUpdate(prevProps: FooterProps) {
-        if( prevProps.cameras !== this.props.cameras ) {
+        if( prevProps.activeCameraId !== this.props.activeCameraId ) {
             this.setState({
-                activeCameraId: this.props.cameras[0].id
+                activeCameraId: this.props.activeCameraId
             })
         };
     }
