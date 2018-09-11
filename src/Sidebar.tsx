@@ -1,21 +1,29 @@
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import * as classNames from 'classnames';
 import * as regionsData from './regions.json';
 
 interface SidebarState {
     activeRegionId: number
 }
 
-class Sidebar extends React.Component<{}, SidebarState> {
+class Sidebar extends React.Component<RouteComponentProps, SidebarState> {
 
     state = {
         activeRegionId: 0
     }
 
-    constructor(props: {}) {
+    constructor(props: RouteComponentProps) {
 
         super(props);
+
+        const isRegionPath = this.props.location.pathname.includes('region');
+        if( isRegionPath ) {
+            const tokens = this.props.location.pathname.split('/');
+            this.state.activeRegionId = parseInt(tokens[2], 10);
+        }
+
         this.regionClicked = this.regionClicked.bind(this);
     }
 
@@ -29,11 +37,24 @@ class Sidebar extends React.Component<{}, SidebarState> {
 
     render() {
 
-        regionsData.regions.map( region => {
+        const self = this;
+
+        const regionLinks = regionsData.regions.map( (region: IRegion, index: number) => {
+            
             const to = `/region/${region.id}`;
-            return <li>
+            const listItemClassNames = classNames({
+                'active': region.id === self.state.activeRegionId
+            });
+
+            return <li key={index} className={listItemClassNames} 
+                       onClick={ () => self.regionClicked(region.id)}>
                 <Link to={to}>Region{region.id}</Link>
             </li>
+        });
+
+
+        const homeItemClassName = classNames({
+            'active': this.state.activeRegionId === 0
         })
 
         return (
@@ -42,20 +63,14 @@ class Sidebar extends React.Component<{}, SidebarState> {
                     <h3>TLV Traffic Monitor</h3>
                 </div>
                 <ul className="list-unstyled components">
-                    <li className='active'>
+                    <li className={homeItemClassName} onClick={ () => self.regionClicked(0) }>
                         <Link to="/home">Home</Link>
                     </li>
-
-                    <li onClick={ () => this.regionClicked(1) }>
-                        <Link to='/region/1'>Region1</Link>
-                    </li>
-                    <li onClick={ () => this.regionClicked(2) }>
-                        <Link to='/region/2'>Region2</Link>
-                    </li>                    
+                    {regionLinks}                 
                 </ul>
             </nav>
-        )
-    }
+        );
+    };
 };
 
-export default Sidebar;
+export default withRouter(Sidebar);
