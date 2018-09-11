@@ -32,11 +32,7 @@ class Region extends React.Component<RegionProps, RegionState> {
             return region.id === this.state.regionId;
         });
        
-        let _selectedPlace = this.state.selectedPlace;
-        _selectedPlace.cameraId =  _region.cameras[0].id;
-        this.setState({
-            selectedPlace: _selectedPlace
-        });
+        this.state.selectedPlace.cameraId =  _region.cameras[0].id;
 
         this.cameraSelected = this.cameraSelected.bind(this);
     }
