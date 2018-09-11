@@ -15,11 +15,12 @@ interface RegionState {
 
 class Region extends React.Component<RegionProps, RegionState> {
 
+    // Instance members
     state = {
         selectedPlace: {
-            cameraId: regionsData.regions[this.props.match.params.regionId].cameras[0].id
+            cameraId: 0
         },
-        regionId: this.props.match.params.regionId,
+        regionId: parseInt(this.props.match.params.regionId, 10),
         activeMarker: {},
         showingInfoWindow: false
     }
@@ -27,16 +28,33 @@ class Region extends React.Component<RegionProps, RegionState> {
     constructor(props: RegionProps) {
         super(props);
 
+        const _region = regionsData.regions.find( (region: IRegion) => {
+            return region.id === this.state.regionId;
+        });
+       
+        let _selectedPlace = this.state.selectedPlace;
+        _selectedPlace.cameraId =  _region.cameras[0].id;
+        this.setState({
+            selectedPlace: _selectedPlace
+        });
+
         this.cameraSelected = this.cameraSelected.bind(this);
     }
 
-    componentDidUpdate(prevProps) {
-        if( this.state.regionId != this.props.match.params.regionId ) {
-            let selectedPlace = this.state.selectedPlace;
-            selectedPlace.cameraId = regionsData.regions[this.props.match.params.regionId].cameras[0].id
+    componentDidUpdate(prevProps: RegionProps) {
+
+        const regionId = parseInt(this.props.match.params.regionId, 10);
+
+        if( this.state.regionId != regionId) {
+
+            let _selectedPlace = this.state.selectedPlace;
+            let _region= regionsData.regions.find( (region: IRegion) => {
+                return region.id === regionId;
+            });
+            _selectedPlace.cameraId = _region.cameras[0].id;
             this.setState({
-                selectedPlace: selectedPlace,
-                regionId: this.props.match.params.regionId 
+                selectedPlace: _selectedPlace,
+                regionId: parseInt(this.props.match.params.regionId, 10)
             });
         }
     }
@@ -81,7 +99,11 @@ class Region extends React.Component<RegionProps, RegionState> {
             {lat: parseFloat("-27.467"), lng: parseFloat("153.027")}
           ];
 
-        const regionData = regionsData.regions[this.props.match.params.regionId];
+       
+        const regionData = regionsData.regions.find( (region: IRegion) => {
+            return region.id === this.state.regionId;
+        });
+
         const _center = regionData.center;
         const centerRegion = {
             lat: _center.lat,
