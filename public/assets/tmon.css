@@ -176,3 +176,30 @@ a[data-toggle="collapse"] {
     vertical-align: middle;
     padding: 4px 4px 2px;
 }
+
+.carouselScroller span {
+    display: inline-block
+}
+
+.carouselScroller span.number-red:before {
+    background-color: red;
+}
+
+.carouselScroller .carousel-item-div>span:before {
+    position: absolute;
+    display: inline-block;
+    content: counter(item);
+    counter-increment: item;
+    width: 20px;
+    height: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: #FFF;
+    padding-right: 1px;
+    padding-bottom: 1px;
+}
+
+.carousel-item-div img {
+    max-width: 140px;
+    max-height: 93px;
+}
