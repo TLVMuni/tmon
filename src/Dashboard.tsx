@@ -8,7 +8,7 @@ import Region from './Region';
 class Dashboard extends React.Component {
     render() {
         return <div className='wrapper'>
-            <Sidebar {...this.props}/>
+            <Sidebar />
             <div className="main-panel" ref="mainPanel">
                 <Header {...this.props}/>
                 <Switch>
