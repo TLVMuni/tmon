@@ -19,6 +19,11 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
+img {
+    border: 0;
+    outline: 0;
+}
+
 .wrapper {
     display: flex;
     width: 100%;
@@ -202,4 +207,53 @@ a[data-toggle="collapse"] {
 .carousel-item-div img {
     max-width: 140px;
     max-height: 93px;
+}
+
+#picturePanel {
+    position: absolute;
+    z-index: 99;
+    right: 4px;
+    left: auto;
+    background-color: inherit;
+    top: 115px;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    touch-action: none;
+    width: 237px;
+    height: 218px;
+}
+
+#cfader {
+    margin-left: 0px;
+    width: 237px;
+    height: 178px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.member-image {
+    width: 200px;
+    height: 200px;
+    left: -100px;
+    top: 0px;
+    cursor: pointer;
+    border-collapse: collapse;
+    position: absolute;
+}
+
+.member-image.current {
+    border: 1px solid #B4B4B4;
+}
+
+#toggle {
+    width: 36px;
+    height: 18px;
+    margin-left: 25px;
+    background-image: url(../resources/icons/picturepanel-placard-toggle.png);
+    cursor: pointer;
+}
+
+.activeCamera {
+    background-color: white;
 }
