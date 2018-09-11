@@ -246,14 +246,6 @@ a[data-toggle="collapse"] {
     border: 1px solid #B4B4B4;
 }
 
-#toggle {
-    width: 36px;
-    height: 18px;
-    margin-left: 25px;
-    background-image: url(../resources/icons/picturepanel-placard-toggle.png);
-    cursor: pointer;
-}
-
 .activeCamera {
     background-color: white;
 }
