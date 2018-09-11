@@ -1,3 +1,5 @@
 interface FooterProps {
-    cameras: any
+    activeCameraId: number,
+    cameras: any,
+    cameraSelected: any
 }
