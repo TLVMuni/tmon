@@ -11,12 +11,6 @@ class CameraView extends React.Component<CameraViewProps> {
                         src="https://balticlivecam.com/cameras/israel/tel-aviv/tel-aviv/?embed">
                     </iframe>
                 </div> 
-                <div id='placardContainer'>
-                    <div id='toggle' style={{
-                        outline: 'none'
-                    }}>
-                    </div>
-                </div>
             </div>
             CameraView: {this.props.cameraId}
         </div>
