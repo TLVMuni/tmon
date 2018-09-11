@@ -3,27 +3,49 @@ import { withRouter } from 'react-router-dom';
 import RegionProps from './RegionRouterProps';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import Footer from './Footer';
+import CameraView from './CameraView';
 import * as regionsData from './regions.json';
 
 interface RegionState {
-    selectedPlace: any
-    activeMarker: any
+    regionId: number,
+    selectedPlace: any,
+    activeMarker: any,
     showingInfoWindow: boolean
 }
 
 class Region extends React.Component<RegionProps, RegionState> {
 
     state = {
-        selectedPlace: {},
+        selectedPlace: {
+            cameraId: regionsData.regions[this.props.match.params.regionId].cameras[0].id
+        },
+        regionId: this.props.match.params.regionId,
         activeMarker: {},
         showingInfoWindow: false
+    }
+
+    constructor(props: RegionProps) {
+        super(props);
+
+        this.cameraSelected = this.cameraSelected.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if( this.state.regionId != this.props.match.params.regionId ) {
+            let selectedPlace = this.state.selectedPlace;
+            selectedPlace.cameraId = regionsData.regions[this.props.match.params.regionId].cameras[0].id
+            this.setState({
+                selectedPlace: selectedPlace,
+                regionId: this.props.match.params.regionId 
+            });
+        }
     }
 
     mapReady() {
         console.log('map ready');        
     }
 
-    onCameraClick = (props, marker, e) => {
+    onMarkerClick = (props, marker, e) => {
  
         this.setState({
             selectedPlace: props,
@@ -39,6 +61,15 @@ class Region extends React.Component<RegionProps, RegionState> {
             activeMarker: null
         })
 
+    }
+
+    // Callback called from Footer when the camera is clicked
+    cameraSelected = (cameraId: number) => {
+        let _selectedPlace = this.state.selectedPlace;
+        _selectedPlace.cameraId = cameraId;
+        this.setState({
+            selectedPlace: _selectedPlace
+        });
     }
 
     render() {
@@ -57,14 +88,14 @@ class Region extends React.Component<RegionProps, RegionState> {
             lng: _center.lon
           };
 
-          const cameraMarkers = regionData.cameras.map( (camera, index) => {
+          const cameraMarkers = regionData.cameras.map( (camera: ICamera, index: number) => {
               const position = {
-                  lat:  camera.lat,
+                  lat: camera.lat,
                   lng: camera.lon
               }
               return <Marker key={index}
-                        name={camera.id}
-                        onClick={this.onCameraClick}
+                        cameraId={camera.id}
+                        onClick={this.onMarkerClick}
                         position={position}>
                      </Marker>
           });
@@ -88,7 +119,8 @@ class Region extends React.Component<RegionProps, RegionState> {
                         </div>
                      </InfoWindow>
                 </Map>
-                <Footer cameras={regionData.cameras} />
+                <CameraView cameraId={this.state.selectedPlace.cameraId} />
+                <Footer cameras={regionData.cameras} cameraSelected={this.cameraSelected}/>
             </React.Fragment>
         )
     }
