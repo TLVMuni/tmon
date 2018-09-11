@@ -7,10 +7,12 @@
             },
             "cameras": [{
                 "id": "10",
+                "name": "Camera 1",
                 "lat": "32.066667",
                 "lon": "34.783333"
             }, {
                 "id": "11",
+                "name": "Camera 2",
                 "lat": "32.066670",
                 "lon": "34.783330"
             }]
@@ -22,10 +24,12 @@
             },
             "cameras": [{
                 "id": "21",
+                "name": "Camera 3",
                 "lat": "",
                 "lon": ""
             }, {
                 "id": "22",
+                "name": "Camera 4",
                 "lat": "",
                 "lon": ""
             }]
