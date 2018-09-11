@@ -94,6 +94,7 @@ class Region extends React.Component<RegionProps, RegionState> {
                   lng: camera.lon
               }
               return <Marker key={index}
+                        name={camera.name}
                         cameraId={camera.id}
                         onClick={this.onMarkerClick}
                         position={position}>
@@ -120,7 +121,9 @@ class Region extends React.Component<RegionProps, RegionState> {
                      </InfoWindow>
                 </Map>
                 <CameraView cameraId={this.state.selectedPlace.cameraId} />
-                <Footer cameras={regionData.cameras} cameraSelected={this.cameraSelected}/>
+                <Footer cameras={regionData.cameras} 
+                        activeCameraId={this.state.selectedPlace.cameraId} 
+                        cameraSelected={this.cameraSelected}/>
             </React.Fragment>
         )
     }
