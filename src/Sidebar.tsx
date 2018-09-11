@@ -1,39 +1,55 @@
 
 import * as React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import * as regionsData from './regions.json';
 
-class Sidebar extends React.Component {
+interface SidebarState {
+    activeRegionId: number
+}
+
+class Sidebar extends React.Component<{}, SidebarState> {
 
     state = {
-        sideBarOpen: true
+        activeRegionId: 0
     }
 
-    constructor(props) {
+    constructor(props: {}) {
+
         super(props);
-
-        this.onSetSidedabarOpen = this.onSetSidedabarOpen.bind(this);
+        this.regionClicked = this.regionClicked.bind(this);
     }
 
-    onSetSidedabarOpen(open) {
+    regionClicked = (regionId: number) => {
+
         this.setState({
-            sideBarOpen: !this.state.sideBarOpen
-        })
+            activeRegionId: regionId
+        });
+
     }
 
     render() {
+
+        regionsData.regions.map( region => {
+            const to = `/region/${region.id}`;
+            return <li>
+                <Link to={to}>Region{region.id}</Link>
+            </li>
+        })
+
         return (
             <nav id='sidebar'>
                 <div className='sidebar-header'>
                     <h3>TLV Traffic Monitor</h3>
                 </div>
                 <ul className="list-unstyled components">
-                    <li>
+                    <li className='active'>
                         <Link to="/home">Home</Link>
                     </li>
-                    <li>
+
+                    <li onClick={ () => this.regionClicked(1) }>
                         <Link to='/region/1'>Region1</Link>
                     </li>
-                    <li>
+                    <li onClick={ () => this.regionClicked(2) }>
                         <Link to='/region/2'>Region2</Link>
                     </li>                    
                 </ul>
