@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { configure, shallow } from 'enzyme';
 //import * as Adapter from 'enzyme-adapter-react-16';
-import { Sidebar } from './Sidebar';
+import Sidebar from './Sidebar';
 
 //configure({ adapter: new Adapter() });
 
