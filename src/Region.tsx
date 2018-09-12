@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
 import RegionProps from './RegionRouterProps';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import Footer from './Footer';
@@ -37,22 +38,32 @@ class Region extends React.Component<RegionProps, RegionState> {
         this.cameraSelected = this.cameraSelected.bind(this);
     }
 
-    componentDidUpdate(prevProps: RegionProps) {
+    static getDerivedStateFromProps(props: RegionProps, state: RegionState) {
+        console.log('GDSFP');           
 
-        const regionId = parseInt(this.props.match.params.regionId, 10);
+        const regionId = parseInt(props.match.params.regionId, 10);
 
-        if( this.state.regionId != regionId) {
+        if( state.regionId != regionId) {
 
-            let _selectedPlace = this.state.selectedPlace;
+            let _selectedPlace = state.selectedPlace;
             let _region= regionsData.regions.find( (region: IRegion) => {
                 return region.id === regionId;
             });
             _selectedPlace.cameraId = _region.cameras[0].id;
-            this.setState({
+            return {
                 selectedPlace: _selectedPlace,
-                regionId: parseInt(this.props.match.params.regionId, 10)
-            });
+                regionId: parseInt(props.match.params.regionId, 10)
+            };
+
+        } else {
+            return null;
         }
+
+    }
+
+    componentDidUpdate(prevProps: RegionProps, prevState: RegionState) {
+        // Get external data here
+        console.log('CDU');
     }
 
     mapReady() {
@@ -106,43 +117,50 @@ class Region extends React.Component<RegionProps, RegionState> {
             lng: _center.lon
           };
 
-          const cameraMarkers = regionData.cameras.map( (camera: ICamera, index: number) => {
-              const position = {
-                  lat: camera.lat,
-                  lng: camera.lon
-              }
-              return <Marker key={index}
-                        name={camera.name}
-                        cameraId={camera.id}
-                        onClick={this.onMarkerClick}
-                        position={position}>
-                     </Marker>
-          });
+        const cameraMarkers = regionData.cameras.map( (camera: ICamera, index: number) => {
+            const position = {
+                lat: camera.lat,
+                lng: camera.lon
+            }
+            return <Marker key={index}
+                    name={camera.name}
+                    cameraId={camera.id}
+                    onClick={this.onMarkerClick}
+                    position={position}>
+                    </Marker>
+        });
 
         return (
 
-            <React.Fragment>
-                <Map google={this.props.google}
-                    style={{width: '100%', height: '100%', position: 'relative'}}
-                    onClick={this.onMapClicked}
-                    center={centerRegion}
-                    zoom={16}
-                    onReady={this.mapReady}>
+            <Container>
+                <Row>
+                    <Col md='4'>One</Col>
+                    <Col md='4'>Two</Col>
+                    <Col md='4'>Three</Col>
+                </Row>
+                <Row>
+                    <Map google={this.props.google}
+                        style={{width: '100%', height: '100%', position: 'relative'}}
+                        onClick={this.onMapClicked}
+                        center={centerRegion}
+                        zoom={16}
+                        onReady={this.mapReady}>
+                            
+                        {cameraMarkers} 
                         
-                    {cameraMarkers} 
-                     
-                     <InfoWindow marker={this.state.activeMarker}
-                                 visible={this.state.showingInfoWindow}>
-                        <div>
-                            <h1>{this.state.selectedPlace.name}</h1>
-                        </div>
-                     </InfoWindow>
-                </Map>
-                <CameraView cameraId={this.state.selectedPlace.cameraId} />
-                <Footer cameras={regionData.cameras} 
-                        activeCameraId={this.state.selectedPlace.cameraId} 
-                        cameraSelected={this.cameraSelected}/>
-            </React.Fragment>
+                        <InfoWindow marker={this.state.activeMarker}
+                                    visible={this.state.showingInfoWindow}>
+                            <div>
+                                <h1>{this.state.selectedPlace.name}</h1>
+                            </div>
+                        </InfoWindow>
+                    </Map>
+                    <CameraView cameraId={this.state.selectedPlace.cameraId} />
+                    <Footer cameras={regionData.cameras} 
+                            activeCameraId={this.state.selectedPlace.cameraId} 
+                            cameraSelected={this.cameraSelected}/>
+                </Row>
+            </Container>
         )
     }
 
