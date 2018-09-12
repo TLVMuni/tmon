@@ -8,13 +8,13 @@ interface SidebarState {
     activeRegionId: number
 }
 
-class Sidebar extends React.Component<RouteComponentProps, SidebarState> {
+class Sidebar extends React.Component<{}, SidebarState> {
 
     state = {
         activeRegionId: 0
     }
 
-    constructor(props: RouteComponentProps) {
+    constructor(props: {}) {
 
         super(props);
 
@@ -48,7 +48,7 @@ class Sidebar extends React.Component<RouteComponentProps, SidebarState> {
 
             return <li key={index} className={listItemClassNames} 
                        onClick={ () => self.regionClicked(region.id)}>
-                <Link to={to}>Region{region.id}</Link>
+                <Link to={to}>Region {region.id}</Link>
             </li>
         });
 
