@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Container, Row, Col } from 'reactstrap';
+import ChartistGraph from 'react-chartist';
+import { Card, CardBody, CardFooter, 
+        Row, Col } from 'reactstrap';
 import RegionProps from './RegionRouterProps';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import Footer from './Footer';
@@ -130,37 +132,117 @@ class Region extends React.Component<RegionProps, RegionState> {
                     </Marker>
         });
 
+        var data = {
+            labels: ['Su', 'Mo', 'Tu'],
+            series: [
+              [100, 204, 406]
+            ]
+          };
+
+        var pieData = {
+            labels: ['Su', 'Mo', 'Tu'],
+            series: [{
+                value: 20,
+              }, {
+                value: 10,
+              }, {
+                value: 70,
+              }]
+        };
+
+        const options = {
+            high: 500,
+            low: 0,
+            // axisX: {
+            //     labelInterpolationFnc: function(value, index) {
+            //       return index % 2 === 0 ? value : null;
+            //     }
+            //   }
+        };
+
+        const pieChartOptions = {
+            labelDirection: 'explode'
+        }
+
+        const typeBar = 'Bar';
+
         return (
 
-            <Container>
-                <Row>
-                    <Col md='4'>One</Col>
-                    <Col md='4'>Two</Col>
-                    <Col md='4'>Three</Col>
+            <React.Fragment>
+                <Row style={
+                    {
+                        width: '80%',
+                        height: '300px',
+                        position: 'absolute',
+                        left: '20%',
+                        zIndex: 99
+                    }
+                }>
+                    <Col md='4'>
+                        <Card>
+                            <CardBody>
+                                <ChartistGraph className='ct-octave ct-chart-1' 
+                                               data={data} 
+                                               options={options} 
+                                               type={'Line'} />
+                            </CardBody>
+                            <CardFooter>
+                                Week's days distribution
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                    <Col md='4'>
+                        <Card>
+                            <CardBody>
+                                <ChartistGraph className='ct-octave ct-chart-2' 
+                                                data={data} 
+                                                options={options} 
+                                                type={'Bar'} />
+                            </CardBody>
+                            <CardFooter>
+                                ssss
+                            </CardFooter>                            
+                        </Card>
+                    </Col>
+                    <Col md='4'>
+                        <Card>
+                            <CardBody>
+                                <ChartistGraph className='ct-octave ct-chart-3' 
+                                                data={pieData} 
+                                                options={pieChartOptions}
+                                                type={'Pie'} />
+                            </CardBody>
+                            <CardFooter>
+                                ssss
+                            </CardFooter>                            
+                        </Card>
+                    </Col>
                 </Row>
-                <Row>
-                    <Map google={this.props.google}
-                        style={{width: '100%', height: '100%', position: 'relative'}}
-                        onClick={this.onMapClicked}
-                        center={centerRegion}
-                        zoom={16}
-                        onReady={this.mapReady}>
-                            
-                        {cameraMarkers} 
+                <Map google={this.props.google}
+                    style={{width: '100%', 
+                            height: '100%', 
+                            position: 'relative',
+                            top: '20%'
+                        }}
+                    onClick={this.onMapClicked}
+                    center={centerRegion}
+                    zoom={16}
+                    onReady={this.mapReady}>
                         
-                        <InfoWindow marker={this.state.activeMarker}
-                                    visible={this.state.showingInfoWindow}>
-                            <div>
-                                <h1>{this.state.selectedPlace.name}</h1>
-                            </div>
-                        </InfoWindow>
-                    </Map>
-                    <CameraView cameraId={this.state.selectedPlace.cameraId} />
-                    <Footer cameras={regionData.cameras} 
-                            activeCameraId={this.state.selectedPlace.cameraId} 
-                            cameraSelected={this.cameraSelected}/>
-                </Row>
-            </Container>
+                    {cameraMarkers} 
+                    
+                    <InfoWindow marker={this.state.activeMarker}
+                                visible={this.state.showingInfoWindow}>
+                        <div>
+                            <h1>{this.state.selectedPlace.name}</h1>
+                        </div>
+                    </InfoWindow>
+                </Map>
+                <CameraView cameraId={this.state.selectedPlace.cameraId} />
+                <Footer cameras={regionData.cameras} 
+                        activeCameraId={this.state.selectedPlace.cameraId} 
+                        cameraSelected={this.cameraSelected}/>
+            </React.Fragment>
         )
     }
 
