@@ -220,7 +220,7 @@ a[data-toggle="collapse"] {
     right: 4px;
     left: auto;
     background-color: inherit;
-    top: 115px;
+    top: 315px;
     user-select: none;
     -webkit-user-drag: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -253,4 +253,8 @@ a[data-toggle="collapse"] {
 
 .activeCamera {
     background-color: white;
+}
+
+.main-panel {
+    width: 100%
 }
